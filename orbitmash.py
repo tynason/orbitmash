@@ -224,7 +224,7 @@ while True:
 	c=complex(p,q)
 	print('\np,q:\t',c.real,c.imag);print('\nc:\t',c) #print('\nzdata:\t',zdata)
 
-	delta=0.005  # generate 8 more values of p,q
+	delta=0.002  # generate 8 more values of p,q
 	p0=p-delta;q0=q+delta;c0=complex(p0,q0)
 	p1=p;q1=q+delta;c1=complex(p1,q1)
 	p2=p+delta;q2=q+delta;c2=complex(p2,q2)
