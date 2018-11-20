@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # or /usr/bin/env python3
 #
-# orbitboy.py
+# orbitmash.py
 # ted nason 2018
 # https://github.com/tynason/orbitboy
 #___________________________________________________________________#
