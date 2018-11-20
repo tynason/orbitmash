@@ -1,9 +1,8 @@
 #!/usr/bin/python3
-# or /usr/bin/env python3
 #
 # orbitmash.py
 # ted nason 2018
-# https://github.com/tynason/orbitboy
+# https://github.com/tynason/orbitmash
 #___________________________________________________________________#
 import matplotlib as mpl
 from pylab import *
@@ -308,36 +307,5 @@ if figclose:
 	plt.close()
 else:
 	plt.show(block=True)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #___________________________________________________________________#
