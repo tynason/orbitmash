@@ -17,6 +17,7 @@ import mysql.connector
 
 class Mandel(object):
 	"Mandelbrot orbit plotting"
+
 	def __init__(self,doani,doloop,dosave,dodata,chunk,chunksleep,maxiters,minbored,boreme,maxrad,trimend,numbins,numgrads,figclose,figsleep,finalsleep,linesleep,wid,ht,xpos,ypos):
 		self.doani=doani;self.doloop=doloop;self.dosave=dosave;self.dodata=dodata;
 		self.chunk=chunk;self.chunksleep=chunksleep;self.maxiters=maxiters;
@@ -31,6 +32,7 @@ class Mandel(object):
 	mpl.rcParams['ytick.color']='#ffffff'
 	mpl.rcParams['lines.linewidth']=0.4
 
+	"""
 	def getcolor(self):
 		brite=0
 		while True:
@@ -41,6 +43,61 @@ class Mandel(object):
 			if r>0.6 or b>0.6: break
 		print('rgbfore: ',int(r*256),int(g*256),int(b*256))
 		return (r,g,b)
+	"""
+
+	def getcolor(self):
+
+		flip=np.random.random_integers(1,8)
+
+		low1=np.random.uniform(0,0.15)
+		low2=np.random.uniform(0,0.15)
+		mid=0.45+np.random.uniform(-0.15,0.15)
+		high=0.85+np.random.uniform(-0.15,0.15)
+
+		if flip==1:
+			r=low1
+			g=low2
+			b=high
+
+		elif flip==2:
+			r=low1
+			g=mid
+			b=high
+
+		elif flip==3:
+			r=low1
+			g=high
+			b=mid
+			
+		
+		elif flip==4:
+			r=high
+			g=low1
+			b=mid
+
+		elif flip==5:
+			r=mid
+			g=low1
+			b=high
+
+		elif flip==6:
+			r=low1
+			g=high
+			b=low2
+			
+		elif flip==7:
+			r=high
+			g=mid
+			b=low1
+			
+		elif flip==8:
+			r=mid
+			g=high
+			b=low1
+
+		print(flip,r,g,b)
+		return (r,g,b)
+
 
 	def lumengen(self,fore,back,grads): # get colors between start (back) and end (fore) colors
 		rangeRGB=[x1-x2 for (x1,x2) in zip(fore,back)] # the range of RGB[0-1] to be covered
@@ -55,12 +112,13 @@ class Mandel(object):
 		while True:
 			boredcount+=1
 			params=[]
+
+			
 			flip=x=np.random.random_integers(1,5)
 			if flip==1: # 5 period repulsive
 				p=np.random.uniform(-0.45,-0.6);q=np.random.uniform(0.5,0.54)
 			elif flip==2: # 5 period attractive
 				p=np.random.uniform(0.355,0.360);q=np.random.uniform(0.315,0.400)
-
 			elif flip==3: # elephant valley
 				p=np.random.uniform(0.2,0.4);q=np.random.uniform(0,0.4)
 			elif flip==4: # seahorse valley
@@ -72,7 +130,6 @@ class Mandel(object):
 				theta=np.random.uniform(0,2*math.pi);rrr=np.random.uniform(0,0.05)
 				p=(0.25+rrr)*cos(theta)-1;q=(0.25+rrr)*sin(theta)
 			#___________________________________________________________________#
-
 
 			k=0
 			c=complex(p,q)
@@ -118,7 +175,7 @@ class Mandel(object):
 			currxlim=ax.get_xlim();currylim=ax.get_ylim()
 			ax.clear();ax.patch.set_facecolor(currcolor)
 			ax.set_title(currtitle,loc='left',color=mybritegrn)
-			ax.grid(True);ax.patch.set_alpha(1.0)
+			ax.grid(False);ax.patch.set_alpha(1.0)
 			ax.set_xlabel(currxlabel,color=mybritegrn)
 			ax.set_ylabel(currylabel,color=mybritegrn)
 			#ax.set_xlim(currxlim);ax.set_ylim(currylim)
@@ -130,7 +187,7 @@ class Mandel(object):
 		currxlim=ax.get_xlim();currylim=ax.get_ylim()
 		ax.clear();ax.patch.set_facecolor(currcolor)
 		ax.set_title(currtitle,loc='left',color=mybritegrn)
-		ax.grid(True);ax.patch.set_alpha(1.0)
+		ax.grid(False);ax.patch.set_alpha(1.0)
 		ax.set_xlabel(currxlabel,color=mybritegrn)
 		ax.set_ylabel(currylabel,color=mybritegrn)
 		ax.set_xlim(currxlim);ax.set_ylim(currylim)
@@ -224,7 +281,7 @@ while True:
 	c=complex(p,q)
 	print('\np,q:\t',c.real,c.imag);print('\nc:\t',c) #print('\nzdata:\t',zdata)
 
-	delta=0.002  # generate 8 more values of p,q
+	delta=0.0015  # generate 8 more values of p,q
 	p0=p-delta;q0=q+delta;c0=complex(p0,q0)
 	p1=p;q1=q+delta;c1=complex(p1,q1)
 	p2=p+delta;q2=q+delta;c2=complex(p2,q2)
@@ -261,7 +318,13 @@ while True:
 			X.pop()
 			Y.pop()
 
-		ax.plot(X,Y,color=mybritegrn)
+
+		ccc=mymand.getcolor()
+		print('color: ', ccc)
+
+		ax.plot(X,Y,color=ccc)
+
+
 
 		ax9.clear();ax9.patch.set_facecolor(mygunmet2)
 		ax9.hist(X,bins=numbins,normed=True,color=myyell)
@@ -307,5 +370,4 @@ if figclose:
 	plt.close()
 else:
 	plt.show(block=True)
-
 #___________________________________________________________________#
